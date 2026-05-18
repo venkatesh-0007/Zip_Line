@@ -1,0 +1,258 @@
+:root {
+    /* Official LinkedIn Game Aesthetic */
+    --primary: #057642; /* LinkedIn Game Green */
+    --primary-light: #d6ebde;
+    --secondary: #666666;
+    --bg-page: #ffffff;
+    --bg-card: #ffffff;
+    --text-main: rgba(0,0,0,0.9);
+    --text-muted: rgba(0,0,0,0.6);
+    --border: #e0e0e0;
+    --cell-border: #e0e0e0;
+    --line-color: #057642;
+    --number-bg: #000000;
+    --radius: 8px;
+    --font-main: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+.game-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+#theme-toggle { display: none; } /* Original game doesn't have theme toggle in this spot */
+
+/* Game Board Container */
+.game-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+}
+
+#game-board-container {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    aspect-ratio: 1/1;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background-color: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.5px solid var(--border);
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+    z-index: 6;
+}
+
+.cell.number::after {
+    content: attr(data-number);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: var(--number-bg);
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    font-weight: 700;
+    z-index: 12;
+}
+
+.cell.visited {
+    background-color: var(--primary-light) !important;
+    animation: cellPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes cellPop {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.cell.active {
+    background-color: var(--primary) !important;
+    color: white !important;
+    z-index: 20;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(5, 118, 66, 0.3);
+}
+
+#line-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 8;
+}
+
+.game-line {
+    stroke: var(--line-color);
+    stroke-width: 28;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    opacity: 0.9;
+}
+
+/* Footer Controls */
+.game-controls {
+    margin-top: 32px;
+    display: flex;
+    gap: 12px;
+}
+
+.control-btn {
+    padding: 10px 24px;
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--text-main);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.control-btn:hover {
+    background-color: #f3f2ef;
+}
+
+/* Modals */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.15);
+}
+
+.modal h2 {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.input-group {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #0073b1;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.theme-selection { display: none; } /* Duplicating exact UI means no extra theme choice on splash */
+
+.game-footer {
+    padding: 24px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}

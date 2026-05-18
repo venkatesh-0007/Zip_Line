@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zip - Practice Mode</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="app">
+        <header class="game-header">
+            <div class="header-content">
+                <span class="logo-text">Zip</span>
+                <div id="timer" class="stat-value">00:00</div>
+            </div>
+        </header>
+
+        <main class="game-container">
+            <div id="game-board-container">
+                <div id="game-board" class="board"></div>
+                <svg id="line-layer"></svg>
+            </div>
+            
+            <div class="game-controls">
+                <button id="undo-btn" class="control-btn">Undo</button>
+                <button id="reset-btn" class="control-btn">Reset</button>
+                <button id="hint-btn" class="control-btn">Hint</button>
+            </div>
+        </main>
+
+        <div id="setup-modal" class="modal active">
+            <div class="modal-content">
+                <h2>Welcome to Zip</h2>
+                <p>Connect all cells in order and fill the grid.</p>
+                <div class="input-group">
+                    <input type="text" id="player-name" placeholder="Enter your name" maxlength="20">
+                </div>
+                <button id="start-game" class="primary-btn">Start Practice</button>
+            </div>
+        </div>
+
+        <div id="win-modal" class="modal">
+            <div class="modal-content">
+                <h2>Great Job!</h2>
+                <p><span id="display-name"></span> completed the Zip puzzle.</p>
+                <div class="final-stats">
+                    <div class="final-stat">
+                        <span class="label">Time</span>
+                        <div id="final-time" class="value">00:00</div>
+                    </div>
+                </div>
+                <button id="play-again" class="primary-btn">Next Level</button>
+            </div>
+        </div>
+
+        <footer class="game-footer">
+            <p>Practice Mode for LinkedIn Zip</p>
+        </footer>
+    </div>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
